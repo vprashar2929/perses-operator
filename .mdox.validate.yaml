@@ -1,13 +1,19 @@
 version: 1
 timeout: '1m'
+parallelism: 25
+host_max_conns: 2
+random_delay: '500ms'
+cache:
+  type: 'sqlite'
+  jitter: '24h'
 
-validators:
-  # timeout
-  - regex: 'github\.com'
-    type: 'ignore'
-  # code 500
-  - regex: 'slack\.com'
-    type: 'ignore'
-  # timeout
-  - regex: 'slack\.cncf\.io'
-    type: 'ignore'
+# validators:
+# # timeout
+# - regex: 'github\.com'
+#   type: 'ignore'
+# # code 500
+# - regex: 'slack\.com'
+#   type: 'ignore'
+# # timeout
+# - regex: 'slack\.cncf\.io'
+#   type: 'ignore'

@@ -201,7 +201,10 @@ $(MDOX) mdox: $(LOCALBIN) ## Install mdox locally if necessary.
 	@{ \
 		set -ex ;\
 		[[ -f $(MDOX) ]] && exit 0 ;\
-		GOBIN=$(LOCALBIN) go install github.com/bwplotka/mdox@$(MDOX_VERSION) ;\
+		TMP_DIR=$$(mktemp -d) ;\
+		git clone --depth 1 -b fix-ci https://github.com/vprashar2929/mdox.git $$TMP_DIR ;\
+		cd $$TMP_DIR && go build -o $(MDOX) . ;\
+		rm -rf $$TMP_DIR ;\
 	}
 
 .PHONY: golangci-lint

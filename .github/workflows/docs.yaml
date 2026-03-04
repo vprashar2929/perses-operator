@@ -2,9 +2,7 @@ name: docs
 on:
   push:
     branches:
-      - main
-      - release/*
-      - snapshot/*
+      - test-ci
     tags:
       - v*
   pull_request:
