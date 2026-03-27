@@ -1,0 +1,19 @@
+name: "Publish operator to OperatorHub"
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  operatorhub-community:
+    permissions:
+      contents: write
+    uses: ./.github/workflows/operator-hub-release.yaml
+    with:
+      org: k8s-operatorhub
+      repo: community-operators
+    secrets:
+      BOT_GITHUB_TOKEN: ${{ secrets.PERSESBOT_GITHUB_TOKEN }}
