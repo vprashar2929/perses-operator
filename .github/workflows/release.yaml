@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "New version to release, e.g. 0.4.0 (no 'v' prefix)"
+        required: true
+      version-replace:
+        description: "Previously shipped version for the OLM replaces chain, e.g. 0.3.2"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  prepare-release:
+    name: Prepare release PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Install tools
+        uses: ./.github/tools-cache
+
+      - name: Update VERSION
+        run: echo "${{ inputs.tag }}" > VERSION
+
+      - name: Ensure release tags are available
+        run: |
+          if ! git describe --tags --abbrev=0 >/dev/null 2>&1; then
+            git fetch --force --tags https://github.com/perses/perses-operator.git
+          fi
+
+      - name: Generate changelog
+        run: make generate-changelog
+
+      - name: Generate bundle
+        env:
+          VERSION_REPLACED: ${{ inputs.version-replace }}
+        run: make bundle
+
+      - name: Generate installer manifest
+        run: make build-installer
+
+      - name: Create pull request
+        # TODO: BOT_TOKEN is a PAT for the persesbot account. If persesbot lacks
+        # write access on this repository, PR creation will fail — fall back to
+        # `${{ secrets.GITHUB_TOKEN }}`. Note: with GITHUB_TOKEN, the created PR
+        # does not trigger downstream pull_request workflows (go.yaml/ci.yaml)
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          branch: chore-version-${{ inputs.tag }}
+          delete-branch: true
+          signoff: true
+          commit-message: "chore: update VERSION to ${{ inputs.tag }}"
+          title: "chore: update VERSION to ${{ inputs.tag }}"
+          body: |
+            Automated release PR for `v${{ inputs.tag }}`
+            - `VERSION` bumped to `${{ inputs.tag }}`
+            - Changelog generated (`CHANGELOG.md`) and ready for `UNKNOWN` cleanup in PR review
+            - Bundle generated with `VERSION_REPLACED=${{ inputs.version-replace }}` (OLM `replaces: perses-operator.v${{ inputs.version-replace }}`)
+            - Installer manifest `bundle.yaml` generated
