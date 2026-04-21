@@ -1,5 +1,23 @@
 ## 0.3.2 / 2026-03-10
 
+## 0.3.3 / 2026-04-21
+
+- [FEATURE] : add replaces-mode support for OLM bundle generation
+- [ENHANCEMENT] Improve manager caching when watching secrets
+- [ENHANCEMENT] Publish container images to quay.io (#340)
+- [BUGFIX] avoid panic when setting degraded status when perses instances are not found
+- [BREAKINGCHANGE] enforce label to watch user provided secrets
+- [DOC] Add bundle-check, installer-check, and helm chart steps to release guide (#361)
+
+[//]: <UNKNOWN ENTRIES. Release shepherd, please review the following list and categorize them or remove them>
+
+- [UNKNOWN] build(deps): Bump sigs.k8s.io/controller-runtime from 0.23.1 to 0.23.3 (#358)
+- [UNKNOWN] build(deps): Bump the k8s-io group with 3 updates (#373)
+- [UNKNOWN] Merge release/v0.3 into main (#364)
+- [UNKNOWN] docs: use Github URLS for cert-manager and minikube (#339)
+- [UNKNOWN] Merge release/v0.3 into main (#331)
+- [UNKNOWN] docs: add support for markdown formatting and validation (#332)
+
 - [BUGFIX] fix delete errors being silently swallowed in dashboard, datasource and globaldatasource controllers (#351)
 - [BUGFIX] add missing pods RBAC permission to role.yaml (#352)
 - [BUGFIX] fix silently swallowed errors in secret watch and OAuth file configuration (#353)
