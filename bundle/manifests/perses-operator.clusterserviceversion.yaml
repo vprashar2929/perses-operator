@@ -1991,15 +1991,15 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Monitoring
-    containerImage: docker.io/persesdev/perses-operator:v0.4.0
-    createdAt: "2026-05-22T10:12:19Z"
+    containerImage: docker.io/persesdev/perses-operator:v0.4.1
+    createdAt: "2026-06-12T11:16:33Z"
     operators.operatorframework.io/builder: operator-sdk-v1.42.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
     repository: https://github.com/perses/perses-operator
   labels:
     operatorframework.io/arch.amd64: supported
     operatorframework.io/arch.arm64: supported
-  name: perses-operator.v0.4.0
+  name: perses-operator.v0.4.1
   namespace: operators
 spec:
   apiservicedefinitions: {}
@@ -2417,7 +2417,7 @@ spec:
                 - --health-probe-bind-address=:8081
                 - --metrics-bind-address=127.0.0.1:8082
                 - --leader-elect
-                image: docker.io/persesdev/perses-operator:v0.4.0
+                image: docker.io/persesdev/perses-operator:v0.4.1
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -2547,8 +2547,8 @@ spec:
   provider:
     name: Perses
     url: perses.dev
-  replaces: perses-operator.v0.3.2
-  version: 0.4.0
+  replaces: perses-operator.v0.4.0
+  version: 0.4.1
   webhookdefinitions:
   - admissionReviewVersions:
     - v1
