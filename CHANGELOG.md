@@ -1,5 +1,8 @@
 ## 0.4.0 / 2026-04-29
 
+## 0.4.1 / 2026-06-12
+
+
 - [FEATURE] watch TLS profiles and apply it to operands (#381)
 - [FEATURE] add replaces-mode support for OLM bundle generation (#379)
 - [ENHANCEMENT] Improve manager caching when watching secrets (#377)
